@@ -1,149 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Doni ❤️ Someone</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:system-ui,sans-serif;
-background:linear-gradient(135deg,#ffb6d9,#ffc8e6,#ffe6f4);
-min-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-.card{
-width:min(92%,900px);
-background:rgba(255,255,255,.25);
-backdrop-filter:blur(12px);
-padding:30px;
-border-radius:30px;
-text-align:center;
-box-shadow:0 0 40px rgba(255,20,147,.35);
-position:relative;
-z-index:2;
-}
-.hamster{
-font-size:90px;
-animation:bounce 2s infinite;
-}
-@keyframes bounce{
-50%{transform:translateY(-15px)}
-}
-.photo{
-width:220px;height:220px;
-object-fit:cover;
-border-radius:50%;
-border:8px solid white;
-box-shadow:0 0 30px hotpink;
-margin:15px auto;
-display:block;
-}
-h1{
-color:#ff1493;
-margin:10px 0;
-}
-.message{
-max-width:650px;
-margin:auto;
-line-height:1.8;
-font-size:18px;
-color:#5c2141;
-}
-.btn{
-padding:14px 30px;
-border:none;
-border-radius:999px;
-cursor:pointer;
-font-size:18px;
-margin:10px;
-background:#ff1493;
-color:white;
-box-shadow:0 0 20px rgba(255,20,147,.4);
-}
-.hidden{display:none}
-#result{
-font-size:28px;
-font-weight:bold;
-color:#d1006f;
-margin-top:20px;
-}
-.heart{
-position:fixed;
-top:-20px;
-font-size:24px;
-animation:fall linear infinite;
-}
-@keyframes fall{
-to{transform:translateY(110vh) rotate(360deg)}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe3f1, #ffcce6, #ffd3ec);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            perspective: 1000px; /* Memberikan efek kedalaman 3D global */
+        }
+
+        /* Kartu dengan efek Glassmorphism & 3D Transform */
+        .card {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 30px 60px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Foto dengan Efek 3D Pop-out */
+        .photo-container {
+            position: relative;
+            display: inline-block;
+            transform: translateZ(50px); /* Membuat foto melayang di atas kartu */
+            margin-bottom: 15px;
+        }
+
+        .photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .photo:hover {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        h1 {
+            color: #d1006f;
+            margin: 15px 0 5px 0;
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transform: translateZ(30px);
+        }
+
+        p {
+            color: #5a2340;
+            font-size: 1.1rem;
+            transform: translateZ(25px);
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin: 25px 0;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #4a1532;
+            font-style: italic;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Tombol Interaktif Bergaya 3D */
+        .btn {
+            margin-top: 15px;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            transform: translateZ(40px);
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: translateZ(45px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 20, 147, 0.6);
+            background: linear-gradient(45deg, #ff007f, #ff52a4);
+        }
+
+        .btn:active {
+            transform: translateZ(35px) scale(0.98);
+        }
+
+        /* Animasi berdenyut khusus untuk tombol pertama */
+        #start .btn {
+            animation: pulse 2s infinite;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.9) translateZ(0);
+        }
+
+        /* Animasi Transisi Elemen */
+        .show-animated {
+            display: block !important;
+            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .answer {
+            margin-top: 25px;
+            font-size: 24px;
+            color: #d1006f;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        /* Animasi 3D Kelopak Bunga / Hati */
+        .heart {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            top: -35px;
+            z-index: 999;
+            animation: fall3D linear infinite;
+        }
+
+        @keyframes fall3D {
+            0% {
+                transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotateX(360deg) rotateY(720deg) rotateZ(180deg);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 20, 147, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0); }
+        }
+
+        @keyframes popUp {
+            from { opacity: 0; transform: scale(0.8) translateZ(0); }
+            to { opacity: 1; transform: scale(1) translateZ(30px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        iframe {
+            margin-top: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateZ(20px);
+        }
+    </style>
 </head>
 <body>
 
-<div class="card">
-<div id="intro">
-<div class="hamster">🧸💖</div>
-<h1>Hi Someone!</h1>
-<p>A little pink friend has something special to tell you...</p>
-<br>
-<button class="btn" onclick="openGift()">Open Gift 💝</button>
-</div>
+    <!-- Menambahkan Atribut data-tilt untuk mengaktifkan efek 3D kemiringan kursor -->
+    <div class="card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
+        
+        <div class="photo-container">
+            <img src="https://i.ibb.co/mCbFnx4Q/26d66bdf9016818aa6b5957bf8e1b4cb.jpg" class="photo" alt="Someone">
+        </div>
 
-<div id="gift" class="hidden">
-<div class="hamster">🧸🌸</div>
-<img class="photo" src="https://i.ibb.co/mCbFnx4Q/26d66bdf9016818aa6b5957bf8e1b4cb.jpg">
+        <h1>🌸 Digital Flower Gift 🌸</h1>
+        <p>From <b>Doni</b> to <b>Someone</b> ❤️</p>
 
-<h1>Doni ❤️ Someone</h1>
+        <div id="start">
+            <button class="btn" onclick="openGift()">Open My Gift 💖</button>
+        </div>
 
-<div class="message">
-“I’ve been thinking about us lately, and I just can't keep my feelings to myself anymore.
-I really like you, and I want to be there for you as more than just a friend.
-Will you be my girlfriend?”
-</div>
+        <div id="gift" class="hidden">
+            <div class="message">
+                “I’ve been thinking about us lately, and I just can't keep my feelings to myself anymore. <br>
+                I really like you, and I want to be there for you as more than just a friend. <br>
+                <strong>Will you be my girlfriend?</strong>”
+            </div>
 
-<br>
+            <iframe src="https://open.spotify.com/embed/track/440H25G5ApUQu9YIRnGh6L"
+                    width="100%" height="152" frameBorder="0"
+                    allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
 
-<iframe style="border-radius:12px"
-src="https://open.spotify.com/embed/track/440H25G5ApUQu9YIRnGh6L"
-width="100%" height="152" frameborder="0"
-allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen"></iframe>
+            <div style="margin-top: 20px;">
+                <button class="btn" onclick="yesAnswer()">💖 Yes, I Will</button>
+            </div>
 
-<br><br>
+            <div id="answer" class="answer hidden">
+                🌹 Thank You Someone 🌹<br>
+                <span style="font-size: 18px; font-weight: normal; color: #5a2340;">You just made Doni the happiest person today ❤️</span>
+            </div>
+        </div>
+    </div>
 
-<button class="btn" onclick="yesAnswer()">💖 YES</button>
+    <!-- Library Vanilla-Tilt untuk efek 3D pada kartu -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script>
+        function openGift(){
+            document.getElementById('start').style.display = 'none';
+            
+            const giftDiv = document.getElementById('gift');
+            giftDiv.classList.remove('hidden');
+            giftDiv.classList.add('show-animated');
+        }
 
-<div id="result" class="hidden">
-🧸 YAYYYYY!!<br><br>
-Someone accepted Doni ❤️<br>
-Forever starts today 🌹
-</div>
-</div>
-</div>
+        function yesAnswer(){
+            const answerDiv = document.getElementById('answer');
+            answerDiv.classList.remove('hidden');
+            answerDiv.classList.add('show-animated');
+            
+            // Menambah efek ledakan bunga/hati saat tombol Yes diklik
+            createCelebrationParticles();
+        }
 
-<script>
-function openGift(){
-document.getElementById('intro').classList.add('hidden');
-document.getElementById('gift').classList.remove('hidden');
-}
+        // Membuat hujan bunga sakura & hati dengan animasi rotasi 3D
+        const items = ['🌸', '✨', '💖', '🌹', '💕'];
+        for(let i = 0; i < 35; i++){
+            createParticle(false);
+        }
 
-function yesAnswer(){
-document.getElementById('result').classList.remove('hidden');
-}
+        function createParticle(isCelebration) {
+            const p = document.createElement('div');
+            p.className = 'heart';
+            p.innerHTML = items[Math.floor(Math.random() * items.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            
+            // Variasi ukuran agar ada efek kedalaman (3D depth)
+            const size = (Math.random() * 15 + 15);
+            p.style.fontSize = size + 'px';
+            
+            if (isCelebration) {
+                // Jika dari klik "Yes", partikel jatuh lebih cepat & barengan
+                p.style.top = '-50px';
+                p.style.animationDuration = (2 + Math.random() * 3) + 's';
+                p.style.animationDelay = (Math.random() * 0.5) + 's';
+            } else {
+                // Partikel latar belakang standar
+                p.style.top = -(size + 20) + 'px';
+                p.style.animationDuration = (5 + Math.random() * 6) + 's';
+                p.style.animationDelay = (Math.random() * 6) + 's';
+            }
+            
+            document.body.appendChild(p);
 
-for(let i=0;i<40;i++){
-const h=document.createElement('div');
-h.className='heart';
-h.innerHTML=['💖','💕','🌸'][Math.floor(Math.random()*3)];
-h.style.left=Math.random()*100+'vw';
-h.style.animationDuration=(4+Math.random()*6)+'s';
-h.style.animationDelay=Math.random()*5+'s';
-document.body.appendChild(h);
-}
-</script>
+            // Hapus elemen setelah animasi selesai agar memori tidak penuh
+            setTimeout(() => {
+                p.remove();
+                if (!isCelebration) createParticle(false); // Buat baru untuk background berkelanjutan
+            }, parseFloat(p.style.animationDuration) * 1000);
+        }
 
+        function createCelebrationParticles() {
+            for(let i = 0; i < 40; i++) {
+                createParticle(true);
+            }
+        }
+    </script>
 </body>
 </html>
