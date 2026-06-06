@@ -2,121 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Someone ❤️</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Menghapus warna biru saat tombol di-tap di HP */
         }
         
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
+            height: 100vh;
             background: linear-gradient(135deg, #ffe3f1, #ffcce6, #ffd3ec);
-            overflow: hidden;
+            overflow: hidden; /* Mengunci layar agar tidak bisa di-scroll di HP */
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            perspective: 1000px; /* Memberikan efek kedalaman 3D global */
+            padding: 16px;
+            perspective: 1000px;
         }
 
-        /* Kartu dengan efek Glassmorphism & 3D Transform */
+        /* Kartu dengan optimasi ukuran layar HP */
         .card {
-            max-width: 500px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.35);
+            max-width: 360px; /* Lebar ideal untuk layar HP genggam */
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 40px 30px;
+            border-radius: 24px;
+            padding: 25px 20px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.4);
             transform-style: preserve-3d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform; /* Meningkatkan performa rendering di HP */
         }
 
-        .card:hover {
-            box-shadow: 0 30px 60px rgba(255, 20, 147, 0.4);
-        }
-
-        /* Foto dengan Efek 3D Pop-out */
+        /* Foto 3D melayang */
         .photo-container {
             position: relative;
             display: inline-block;
-            transform: translateZ(50px); /* Membuat foto melayang di atas kartu */
-            margin-bottom: 15px;
+            transform: translateZ(40px);
+            margin-bottom: 10px;
         }
 
         .photo {
-            width: 180px;
-            height: 180px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid white;
-            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .photo:hover {
-            transform: scale(1.08) rotate(5deg);
+            border: 5px solid white;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.25);
         }
 
         h1 {
             color: #d1006f;
-            margin: 15px 0 5px 0;
-            font-size: 2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin: 10px 0 5px 0;
+            font-size: 1.5rem;
             transform: translateZ(30px);
         }
 
         p {
             color: #5a2340;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             transform: translateZ(25px);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
+        /* Message dengan ukuran font nyaman di HP */
         .message {
-            margin: 25px 0;
-            font-size: 1.15rem;
-            line-height: 1.8;
+            margin: 15px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
             color: #4a1532;
             font-style: italic;
-            animation: fadeIn 1s ease-out;
         }
 
-        /* Tombol Interaktif Bergaya 3D */
+        /* Tombol yang nyaman di-tap jempol (Touch-friendly) */
         .btn {
-            margin-top: 15px;
-            padding: 15px 35px;
+            margin-top: 10px;
+            padding: 14px 30px;
             border: none;
             border-radius: 999px;
             background: linear-gradient(45deg, #ff1493, #ff69b4);
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
-            transition: all 0.3s ease;
-            transform: translateZ(40px);
-            outline: none;
+            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.3);
+            transform: translateZ(35px);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
         }
 
-        .btn:hover {
-            transform: translateZ(45px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(255, 20, 147, 0.6);
-            background: linear-gradient(45deg, #ff007f, #ff52a4);
-        }
-
+        /* Animasi feedback saat tombol di-tap di HP */
         .btn:active {
-            transform: translateZ(35px) scale(0.98);
+            transform: translateZ(25px) scale(0.95);
+            box-shadow: 0 4px 10px rgba(255, 20, 147, 0.2);
         }
 
-        /* Animasi berdenyut khusus untuk tombol pertama */
         #start .btn {
             animation: pulse 2s infinite;
         }
@@ -124,79 +110,75 @@
         .hidden {
             display: none;
             opacity: 0;
-            transform: scale(0.9) translateZ(0);
         }
 
-        /* Animasi Transisi Elemen */
         .show-animated {
             display: block !important;
-            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
         }
 
         .answer {
-            margin-top: 25px;
-            font-size: 24px;
+            margin-top: 20px;
+            font-size: 20px;
             color: #d1006f;
             font-weight: bold;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        /* Animasi 3D Kelopak Bunga / Hati */
+        /* Animasi Kelopak 3D (dioptimalkan agar ringan di chipset HP) */
         .heart {
             position: fixed;
-            font-size: 24px;
+            font-size: 20px;
             pointer-events: none;
-            top: -35px;
-            z-index: 999;
+            top: -30px;
+            z-index: 99;
             animation: fall3D linear infinite;
+            will-change: transform;
         }
 
         @keyframes fall3D {
             0% {
-                transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                transform: translateY(0) rotateX(0deg) rotateY(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(105vh) rotateX(360deg) rotateY(720deg) rotateZ(180deg);
-                opacity: 0.3;
+                transform: translateY(105vh) rotateX(360deg) rotateY(360deg);
+                opacity: 0.2;
             }
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 20, 147, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 20, 147, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0); }
         }
 
         @keyframes popUp {
-            from { opacity: 0; transform: scale(0.8) translateZ(0); }
-            to { opacity: 1; transform: scale(1) translateZ(30px); }
+            from { opacity: 0; transform: scale(0.9) translateZ(0); }
+            to { opacity: 1; transform: scale(1) translateZ(20px); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
+        /* Musik Player Player Spotify disesuaikan agar rapi di HP */
         iframe {
-            margin-top: 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            transform: translateZ(20px);
+            margin-top: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transform: translateZ(15px);
+            height: 80px; /* Diperkecil menjadi mode compact agar tidak makan tempat */
         }
     </style>
 </head>
 <body>
 
-    <!-- Menambahkan Atribut data-tilt untuk mengaktifkan efek 3D kemiringan kursor -->
-    <div class="card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
+    <!-- Menambahkan gyroscope untuk HP (gyroscope: true) -->
+    <div class="card" data-tilt data-tilt-max="15" data-tilt-speed="800" data-tilt-gyroscope="true" data-tilt-glare="true" data-tilt-max-glare="0.15">
         
         <div class="photo-container">
             <img src="https://i.ibb.co/mCbFnx4Q/26d66bdf9016818aa6b5957bf8e1b4cb.jpg" class="photo" alt="Someone">
         </div>
 
-        <h1>🌸 Digital Flower Gift 🌸</h1>
-        <p>From <b>Doni</b> to <b>Someone</b> ❤️</p>
+        <h1>🌸 Digital Gift 🌸</h1>
+        <p>From <b>Doni</b>
 
         <div id="start">
             <button class="btn" onclick="openGift()">Open My Gift 💖</button>
@@ -209,45 +191,45 @@
                 <strong>Will you be my girlfriend?</strong>”
             </div>
 
-            <iframe src="https://open.spotify.com/embed/track/440H25G5ApUQu9YIRnGh6L"
-                    width="100%" height="152" frameBorder="0"
+            <!-- Spotify mode compact (height=80) biar pas di layar HP pendek -->
+            <iframe src="https://open.spotify.com/embed/track/440H25G5ApUQu9YIRnGh6L?utm_source=generator&theme=0"
+                    width="100%" height="80" frameBorder="0"
                     allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
             </iframe>
 
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 15px;">
                 <button class="btn" onclick="yesAnswer()">💖 Yes, I Will</button>
             </div>
 
             <div id="answer" class="answer hidden">
                 🌹 Thank You Someone 🌹<br>
-                <span style="font-size: 18px; font-weight: normal; color: #5a2340;">You just made Doni the happiest person today ❤️</span>
+                <span style="font-size: 15px; font-weight: normal; color: #5a2340;">You just made Doni the happiest person today ❤️</span>
             </div>
         </div>
     </div>
 
-    <!-- Library Vanilla-Tilt untuk efek 3D pada kartu -->
+    <!-- Library Vanilla-Tilt (Mendukung respon kemiringan Gyroscope HP) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script>
         function openGift(){
             document.getElementById('start').style.display = 'none';
-            
             const giftDiv = document.getElementById('gift');
             giftDiv.classList.remove('hidden');
             giftDiv.classList.add('show-animated');
         }
 
-        function yesAnswer(){
+        function yesAnswer() {
             const answerDiv = document.getElementById('answer');
             answerDiv.classList.remove('hidden');
             answerDiv.classList.add('show-animated');
-            
-            // Menambah efek ledakan bunga/hati saat tombol Yes diklik
             createCelebrationParticles();
         }
 
-        // Membuat hujan bunga sakura & hati dengan animasi rotasi 3D
-        const items = ['🌸', '✨', '💖', '🌹', '💕'];
-        for(let i = 0; i < 35; i++){
+        // Animasi kelopak bunga (dibatasi jumlahnya agar tidak membuat HP lag)
+        const items = ['🌸', '✨', '💖', '🌹'];
+        const maxParticles = 20; // Jumlah pas untuk performa HP lancar
+
+        for(let i = 0; i < maxParticles; i++){
             createParticle(false);
         }
 
@@ -255,35 +237,31 @@
             const p = document.createElement('div');
             p.className = 'heart';
             p.innerHTML = items[Math.floor(Math.random() * items.length)];
-            p.style.left = Math.random() * 100 + 'vw';
+            p.style.left = Math.random() * 95 + 'vw';
             
-            // Variasi ukuran agar ada efek kedalaman (3D depth)
-            const size = (Math.random() * 15 + 15);
+            const size = (Math.random() * 12 + 14); // Sedikit diperkecil untuk layar HP
             p.style.fontSize = size + 'px';
             
             if (isCelebration) {
-                // Jika dari klik "Yes", partikel jatuh lebih cepat & barengan
-                p.style.top = '-50px';
-                p.style.animationDuration = (2 + Math.random() * 3) + 's';
-                p.style.animationDelay = (Math.random() * 0.5) + 's';
+                p.style.top = '-40px';
+                p.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                p.style.animationDelay = (Math.random() * 0.3) + 's';
             } else {
-                // Partikel latar belakang standar
                 p.style.top = -(size + 20) + 'px';
-                p.style.animationDuration = (5 + Math.random() * 6) + 's';
-                p.style.animationDelay = (Math.random() * 6) + 's';
+                p.style.animationDuration = (4 + Math.random() * 5) + 's';
+                p.style.animationDelay = (Math.random() * 5) + 's';
             }
             
             document.body.appendChild(p);
 
-            // Hapus elemen setelah animasi selesai agar memori tidak penuh
             setTimeout(() => {
                 p.remove();
-                if (!isCelebration) createParticle(false); // Buat baru untuk background berkelanjutan
+                if (!isCelebration) createParticle(false);
             }, parseFloat(p.style.animationDuration) * 1000);
         }
 
         function createCelebrationParticles() {
-            for(let i = 0; i < 40; i++) {
+            for(let i = 0; i < 25; i++) {
                 createParticle(true);
             }
         }
